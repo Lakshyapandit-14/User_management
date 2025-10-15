@@ -5,7 +5,12 @@ from app.services.users.profile import schemas, service
 
 router = APIRouter(prefix="/profile", tags=["Profile"])
 
-@router.post("/{user_id}", response_model=schemas.ProfileResponse)
+#@router.post("/{user_id}", response_model=schemas.ProfileResponse)
+#def create_user_profile(user_id: int, data: schemas.ProfileCreate, db: Session = Depends(get_db)):
+ #   return service.create_profile(db, user_id, data)
+
+
+@router.post("/{user_id}/profile", response_model=schemas.ProfileResponse)
 def create_user_profile(user_id: int, data: schemas.ProfileCreate, db: Session = Depends(get_db)):
     return service.create_profile(db, user_id, data)
 

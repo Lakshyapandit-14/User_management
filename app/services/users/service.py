@@ -62,3 +62,16 @@ def update_user(db: Session, user_id: int, update_data: schemas.UserUpdate):
 # ---------- Get All Users ----------
 def get_all_users(db: Session):
     return db.query(models.User).all()
+
+
+def get_user(db: Session, user_id: int):
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    return user
+
+def delete_user(db: Session, user_id: int) -> bool:
+    user = db.query(models.User).filter(models.User.id == user_id).first()
+    if not user:
+        return False
+    db.delete(user)
+    db.commit()
+    return True
