@@ -20,7 +20,19 @@ class InvalidCredentialsException(HTTPException):
 class UnauthorizedException(HTTPException):
     def __init__(self, detail: str = "You are not authorized to perform this action"):
         super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
+#thes 2 new
 
+class NotFoundException(Exception):
+    def __init__(self, message: str = "Resource not found"):
+        self.message = message
+        super().__init__(self.message)
+
+
+
+class AlreadyExistsException(Exception):
+    def __init__(self, message: str = "Resource already exists"):
+        self.message = message
+        super().__init__(self.message)
 
 # --- Optional Helper Function ---
 def raise_http_exception(status_code: int, message: str):

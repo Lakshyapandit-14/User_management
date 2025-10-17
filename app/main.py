@@ -34,13 +34,4 @@ def health_check():
 # Run app (for direct execution)
 if __name__ == "__main__":
     import uvicorn
-<<<<<<< Updated upstream
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-
-
-
-
-    
-=======
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
->>>>>>> Stashed changes

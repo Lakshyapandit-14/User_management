@@ -1,7 +1,7 @@
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 import jwt
-from app.core.config import settings  # ✅ Only import settings once
+from app.core.config import settings
 from typing import Optional
 
 # Load values from settings
@@ -9,17 +9,17 @@ SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
-# Password hashing context using bcrypt
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Password hashing context using Argon2 (no need for truncation)
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 
 # --- Password Utilities ---
 def hash_password(password: str) -> str:
-    """Hash plain text password, truncated for bcrypt compatibility."""
-    return pwd_context.hash(password[:72])
+    """Hash plain text password using Argon2."""
+    return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify that a plain password matches the hashed version, truncated for bcrypt compatibility."""
-    return pwd_context.verify(plain_password[:72], hashed_password)
+    """Verify that a plain password matches the hashed version using Argon2."""
+    return pwd_context.verify(plain_password, hashed_password)
 
 # --- JWT Token Utilities ---
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
