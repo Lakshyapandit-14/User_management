@@ -39,3 +39,16 @@ def decode_access_token(token: str):
         return None
     except jwt.InvalidTokenError:
         return None
+    
+    from passlib.context import CryptContext
+
+# Create a password hashing context
+# for signup 
+#pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def get_password_hash(password: str) -> str:
+    """
+    Hash a plain-text password using bcrypt.
+    Returns the hashed password as a string.
+    """
+    return pwd_context.hash(password)

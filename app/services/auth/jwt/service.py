@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from jose import JWTError, jwt
 
 from app.core.common.utils import create_access_token, verify_password
+from app.core.common.utils import create_access_token, verify_password, get_password_hash
 from app.core.config import settings
 from app.core.common.exceptions import NotFoundException, InvalidCredentialsException
 from app.services.users.models import User
@@ -106,3 +107,74 @@ class AuthService:
             return {"message": "Token is valid", "user": payload}
         except JWTError:
             raise InvalidCredentialsException("Invalid or expired token")
+
+    from app.services.users.schemas import UserCreate
+    @staticmethod
+    # def signup_user(db: Session, user_data: UserCreate):
+    #     existing_user = db.query(User).filter(User.username == user_data.username).first()
+    #     if existing_user:
+    #         raise HTTPException(status_code=400, detail="Username already exists")
+
+    #     hashed_password = get_password_hash(user_data.password)
+    #     #new_user = User(username=user_data.username, hashed_password=hashed_password)
+    #     new_user = User(
+    #         username=user_data.username,
+    #         email=user_data.email,
+    #         hashed_password=hashed_password,
+    #         full_name=user_data.full_name if hasattr(user_data, 'full_name') else None,)
+    #     db.add(new_user)
+    #     db.commit()
+    #     db.refresh(new_user)
+
+    #     token = AuthService.create_user_token(new_user)
+    #     return schemas.TokenResponse(access_token=token)
+
+
+    # def signup_user(db: Session, user_data: UserCreate):
+    #     existing_user = db.query(User).filter(User.username == user_data.username).first()
+    #     if existing_user:
+    #         raise HTTPException(status_code=400, detail="Username already exists")
+
+    #     hashed_password = get_password_hash(user_data.password)
+    #     new_user = User(
+    #         username=user_data.username,
+    #         email=user_data.email,
+    #         hashed_password=hashed_password,
+    #         full_name=getattr(user_data, "full_name", None),
+    #     )
+    #     db.add(new_user)
+    #     db.commit()
+    #     db.refresh(new_user)
+
+    #     token = AuthService.create_user_token(new_user)
+    #     return schemas.TokenResponse(access_token=token)
+    @staticmethod
+    def signup_user(db: Session, user_data: UserCreate):
+        existing_user = db.query(User).filter(User.username == user_data.username).first()
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Username already exists")
+
+        # 🔹 Hash the password using Argon2
+        hashed_password = get_password_hash(user_data.password)
+
+        # 🔹 Create new user object
+        new_user = User(
+            username=user_data.username,
+            email=user_data.email,
+            hashed_password=hashed_password,
+            full_name=getattr(user_data, "full_name", None),
+        )
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        # 🔹 Create JWT access token
+        access_token = create_access_token({"sub": new_user.username})
+
+        # 🔹 Return the data exactly as you want
+        return {
+            "username": new_user.username,
+            "password": user_data.password,  # only for testing, do not expose in production
+            "email": new_user.email,
+            "access_token": access_token
+        }

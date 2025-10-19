@@ -18,3 +18,7 @@ class TokenResponse(BaseModel):
 class TokenPayload(BaseModel):
     sub: Optional[str] = None  # usually username or user ID
     exp: Optional[int] = None  # expiration time
+
+class SignupResponse(BaseModel):
+    username: str
+    password: str

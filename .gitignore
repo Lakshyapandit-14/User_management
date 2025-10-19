@@ -1,25 +1,69 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
-*.db
-*.sqlite3
-*.log
-.env
-.env.*
+*.env
+*.venv
+env/
 venv/
 ENV/
-env/
-.venv
-.idea/
-.vscode/
-alembic/versions/*.pyc
-.mypy_cache/
-.pytest_cache/
-dist/
-build/
-*.egg-info/
-.ipynb_checkpoints
-.DS_Store
-Thumbs.db
+env.bak/
+venv.bak/
+*.sqlite3
+*.db
+*.db-journal
+instance/
+.webassets-cache
 
+# FastAPI
+*.log
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Test and coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+test-results/
+junit.xml
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Migrations
+migrations/
+alembic/
+
+# dotenv
+*.env
+.env.*
+
+# Git itself
+.git/
+.gitignore
+
+# Other
+*.bak
+*.swp
+*.swo

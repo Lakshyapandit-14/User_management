@@ -8,6 +8,7 @@ from app.services.users.profile import models
 #
 from app.services.users.models import User
 from app.services.users.profile.models import UserProfile
+from app.core.common import exceptions
 
 
 class ProfileService:
@@ -34,6 +35,7 @@ class ProfileService:
         db.commit()
         db.refresh(profile)
         return profile
+
 
     @staticmethod
     def get_profile(db: Session, user_id: int):

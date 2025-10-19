@@ -13,6 +13,7 @@ class UserBase(BaseModel):
 # ---------- Create Schema ----------
 class UserCreate(UserBase):
     password: str
+      
 
 
 # ---------- Response Schema ----------

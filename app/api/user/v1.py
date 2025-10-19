@@ -51,4 +51,4 @@ def update_user_profile(user_id: int, data: profile_schemas.ProfileUpdate, db: S
     return ProfileService.update_profile(db, user_id, data)
 
 # Attach profile routes under /users/profile
-router.include_router(profile_router)
+#router.include_router(profile_router) # now 

@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.user.v1 import router as user_router
 from app.api.auth.v1 import router as auth_router
 from app.core.config import settings
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
 from app.core.connections.database import engine, Base
 
@@ -21,10 +22,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+from app.api.user.v1 import profile_router # now (19/10/2025 : 9:33 am)
 # Include versioned routers
 app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
 app.include_router(auth_router, prefix="/api/v1/auth", tags=["Auth"])
+#app.include_router(profile_router, prefix="/api/v1/user", tags=["Profile"])
 
 # Health check endpoint
 @app.get("/", tags=["Health"])
