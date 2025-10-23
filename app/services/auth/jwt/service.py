@@ -10,6 +10,7 @@ from app.core.common.exceptions import NotFoundException, InvalidCredentialsExce
 from app.services.users.models import User
 from app.services.auth.jwt import schemas
 from fastapi import Depends, Header, HTTPException
+from app.services.users.schemas import UserCreate
 
 #SECRET_KEY = "your-secret-key"
 #ALGORITHM = "HS256"
@@ -108,46 +109,7 @@ class AuthService:
         except JWTError:
             raise InvalidCredentialsException("Invalid or expired token")
 
-    from app.services.users.schemas import UserCreate
-    @staticmethod
-    # def signup_user(db: Session, user_data: UserCreate):
-    #     existing_user = db.query(User).filter(User.username == user_data.username).first()
-    #     if existing_user:
-    #         raise HTTPException(status_code=400, detail="Username already exists")
-
-    #     hashed_password = get_password_hash(user_data.password)
-    #     #new_user = User(username=user_data.username, hashed_password=hashed_password)
-    #     new_user = User(
-    #         username=user_data.username,
-    #         email=user_data.email,
-    #         hashed_password=hashed_password,
-    #         full_name=user_data.full_name if hasattr(user_data, 'full_name') else None,)
-    #     db.add(new_user)
-    #     db.commit()
-    #     db.refresh(new_user)
-
-    #     token = AuthService.create_user_token(new_user)
-    #     return schemas.TokenResponse(access_token=token)
-
-
-    # def signup_user(db: Session, user_data: UserCreate):
-    #     existing_user = db.query(User).filter(User.username == user_data.username).first()
-    #     if existing_user:
-    #         raise HTTPException(status_code=400, detail="Username already exists")
-
-    #     hashed_password = get_password_hash(user_data.password)
-    #     new_user = User(
-    #         username=user_data.username,
-    #         email=user_data.email,
-    #         hashed_password=hashed_password,
-    #         full_name=getattr(user_data, "full_name", None),
-    #     )
-    #     db.add(new_user)
-    #     db.commit()
-    #     db.refresh(new_user)
-
-    #     token = AuthService.create_user_token(new_user)
-    #     return schemas.TokenResponse(access_token=token)
+   
     @staticmethod
     def signup_user(db: Session, user_data: UserCreate):
         existing_user = db.query(User).filter(User.username == user_data.username).first()
